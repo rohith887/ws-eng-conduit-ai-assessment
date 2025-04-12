@@ -1,7 +1,8 @@
 import { ApiService } from '@realworld/core/http-client';
 import { UserResponse } from '@realworld/core/api-types';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { LoginUser, LoginUserRequest, NewUserRequest, NewUser } from '@realworld/core/api-types';
 
 @Injectable({ providedIn: 'root' })
