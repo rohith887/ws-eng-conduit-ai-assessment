@@ -8,13 +8,22 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const port = 3000;
 
-  const server = app.getHttpServer();
-  server.on('error', (error: NodeJS.ErrnoException) => {
-    if (error.code === 'EADDRINUSE') {
-      console.error(`Port ${port} is already in use. Please free the port and try again.`);
-      process.exit(1);
-    }
-  });
+  const checkPort = (port: number): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const tester = require('net').createServer()
+        .once('error', (err: any) => (err.code === 'EADDRINUSE' ? resolve(false) : resolve(true)))
+        .once('listening', () => tester.once('close', () => resolve(true)).close())
+        .listen(port);
+    });
+  };
+
+  const port = 3000;
+  const isPortFree = await checkPort(port);
+
+  if (!isPortFree) {
+    console.error(`Port ${port} is already in use. Please free the port and try again.`);
+    process.exit(1);
+  }
 
   await app.listen(port);
   console.log(`App running at http://localhost:${port}`);
