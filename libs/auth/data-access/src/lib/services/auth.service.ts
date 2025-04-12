@@ -11,7 +11,11 @@ export class AuthService {
   user(): Observable<UserResponse> {
     const token = localStorage.getItem('jwtToken');
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    return this.apiService.get<UserResponse>('/user', { headers });
+    return this.apiService.get<UserResponse>('/user', { headers }).pipe(
+      tap((response) => {
+        console.log('User data received:', response);
+      })
+    );
   }
 
   login(credentials: LoginUser): Observable<UserResponse> {

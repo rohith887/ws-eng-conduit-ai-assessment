@@ -15,7 +15,9 @@ export class UserController {
 
   @Get('user')
   async findMe(@User('email') email: string): Promise<IUserRO> {
-    return this.userService.findByEmail(email);
+    const user = await this.userService.findByEmail(email);
+    console.log(`User data retrieved for: ${email}`);
+    return user;
   }
 
   @Put('user')
