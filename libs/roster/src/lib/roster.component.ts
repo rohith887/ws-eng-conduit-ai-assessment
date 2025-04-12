@@ -19,13 +19,4 @@ export class RosterComponent implements OnInit {
       this.roster = data;
     });
   }
-
-@Component({
-  selector: 'realworld-roster',
-  templateUrl: './roster.component.html',
-  styleUrls: [],
-  providers: [],
-  imports: [],
-  standalone: true,
-})
-export class RosterComponent {}
+}
