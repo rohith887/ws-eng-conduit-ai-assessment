@@ -5,7 +5,8 @@ import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  const port = process.env.PORT || 3001;
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('PORT', 3001);
 
   const options = new DocumentBuilder()
     .setTitle('NestJS Realworld Example App')
