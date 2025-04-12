@@ -1,11 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const appOptions = { cors: true };
-  const app = await NestFactory.create(AppModule, appOptions);
-  app.setGlobalPrefix('api');
+  const app = await NestFactory.create(AppModule, { cors: true });
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('PORT', 3000);
 
   const options = new DocumentBuilder()
     .setTitle('NestJS Realworld Example App')
@@ -17,9 +18,8 @@ async function bootstrap() {
   SwaggerModule.setup('/docs', app, document);
 
   // await app.listen(3005);
-  const port = process.env.PORT || 3000;
-await app.listen(port);
-console.log(` App running at http://localhost:${port}`);
+  await app.listen(port);
+  console.log(`App running at http://localhost:${port}`);
 
 }
 bootstrap().catch((err) => {
