@@ -29,6 +29,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/docs', app, document);
 }
-bootstrap().catch((err) => {
-  console.log(err);
+bootstrap().catch((error: any) => {
+  console.error('Error during bootstrap:', error);
 });
