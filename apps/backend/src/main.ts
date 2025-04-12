@@ -8,6 +8,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const port = 3000;
 
+  const port = 3000;
+
   const checkPort = (port: number): Promise<boolean> => {
     return new Promise((resolve) => {
       const tester = require('net').createServer()
