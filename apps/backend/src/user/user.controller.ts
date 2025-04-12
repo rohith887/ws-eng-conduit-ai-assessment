@@ -49,6 +49,7 @@ export class UserController {
       throw new HttpException({ errors }, 401);
     }
     const token = this.userService.generateJWT(foundUser);
+    console.log(`Returning JWT for user: ${foundUser.email}`);
     console.log(`🔐 Login successful for: ${loginUserDto.email}`);
     const { email, username, bio, image } = foundUser;
     const user = { email, token, username, bio, image };

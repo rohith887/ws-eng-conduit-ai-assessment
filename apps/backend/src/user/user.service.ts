@@ -43,6 +43,7 @@ export class UserService {
 
     // create new user
     const user = new User(username, email, crypto.createHmac('sha256', password).digest('hex'));
+    console.log(`Creating new user: ${email}`);
     const errors = await validate(user);
 
     if (errors.length > 0) {
