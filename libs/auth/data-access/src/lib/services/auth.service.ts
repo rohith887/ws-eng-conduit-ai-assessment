@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { LoginUser, LoginUserRequest, NewUserRequest, NewUser } from '@realworld/core/api-types';
 import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -40,7 +41,7 @@ export class AuthService {
         localStorage.setItem('jwtToken', response.user.token);
         console.log(`Stored JWT token for new user: ${credentials.email}`);
       }),
-      catchError((error) => {
+      catchError((error: any) => {
         console.error('Registration error:', error);
         alert('Registration failed. Please check your input and try again.');
         return throwError(error);
