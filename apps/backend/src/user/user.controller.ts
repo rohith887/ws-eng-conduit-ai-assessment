@@ -26,7 +26,7 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @Post('users')
   async create(@Body('user') userData: CreateUserDto) {
-    console.log(`✅ New user registration attempt: ${userData.email}`);
+    console.log(`✅ New user registered: ${userData.email}`);
     return this.userService.create(userData);
   }
 
