@@ -46,6 +46,7 @@ export class UserService {
     // create new user
     const user = new User(username, email, crypto.createHmac('sha256', password).digest('hex'));
     console.log(`Creating new user: ${email}`);
+    console.log(`Creating new user: ${email}`);
     const errors = await validate(user);
 
     if (errors.length > 0) {
@@ -98,6 +99,16 @@ export class UserService {
     exp.setDate(today.getDate() + 60);
 
     const token = jwt.sign(
+      {
+        email: user.email,
+        exp: exp.getTime() / 1000,
+        id: user.id,
+        username: user.username,
+      },
+      SECRET,
+    );
+    console.log(`Generated JWT for user: ${user.email}`);
+    return token;
       {
         email: user.email,
         exp: exp.getTime() / 1000,
