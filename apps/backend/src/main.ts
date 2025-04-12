@@ -12,9 +12,10 @@ async function bootstrap() {
     try {
       await app.listen(port);
       console.log(`App running at http://localhost:${port}`);
-    } catch (error: any) {
-      if (error.code === 'EADDRINUSE') {
+    } catch (error) {
+      if (error instanceof Error && (error as any).code === 'EADDRINUSE') {
         console.log(`Port ${port} is in use, trying next port...`);
+        await app.close();
         await startServer(port + 1);
       } else {
         throw error;
