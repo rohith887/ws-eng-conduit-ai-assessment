@@ -24,8 +24,13 @@ async function bootstrap() {
     process.exit(1);
   }
 
-  await app.listen(port);
-  console.log(`App running at http://localhost:${port}`);
+  try {
+    await app.listen(port);
+    console.log(`App running at http://localhost:${port}`);
+  } catch (error) {
+    console.error(`Failed to start server on port ${port}:`, error.message);
+    process.exit(1);
+  }
 
   const options = new DocumentBuilder()
     .setTitle('NestJS Realworld Example App')
