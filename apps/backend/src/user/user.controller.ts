@@ -26,6 +26,7 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @Post('users')
   async create(@Body('user') userData: CreateUserDto) {
+    console.log('POST /users called with data:', userData);
     return this.userService.create(userData);
   }
 
@@ -37,6 +38,7 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @Post('users/login')
   async login(@Body('user') loginUserDto: LoginUserDto): Promise<IUserRO> {
+    console.log('POST /users/login called with data:', loginUserDto);
     const foundUser = await this.userService.findOne(loginUserDto);
 
     const errors = { User: ' not found' };
