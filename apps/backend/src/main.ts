@@ -8,7 +8,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const port = 3000;
 
-  await app.listen(port);
+  try {
+    await app.listen(port);
+    console.log(`App running at http://localhost:${port}`);
+  } catch (error) {
+    console.error(`Failed to start server on port ${port}:`, error.message);
+    process.exit(1);
+  }
   console.log(`App running at http://localhost:${port}`);
 
   const options = new DocumentBuilder()
