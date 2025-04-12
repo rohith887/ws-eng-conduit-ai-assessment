@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule, OnModuleInit } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MikroORM } from '@mikro-orm/core';
 import { MikroOrmMiddleware, MikroOrmModule } from '@mikro-orm/nestjs';
 
@@ -11,7 +12,7 @@ import { UserModule } from './user/user.module';
 import ormConfig from '../mikro-orm.config';
 @Module({
   controllers: [AppController],
-  imports: [MikroOrmModule.forRoot(ormConfig), ArticleModule, UserModule, ProfileModule, TagModule, RosterModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), MikroOrmModule.forRoot(ormConfig), ArticleModule, UserModule, ProfileModule, TagModule, RosterModule],
   providers: [],
 })
 export class AppModule implements NestModule, OnModuleInit {
