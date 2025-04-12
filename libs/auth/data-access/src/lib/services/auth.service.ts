@@ -11,9 +11,9 @@ export class AuthService {
 
   user(): Observable<UserResponse> {
     const token = localStorage.getItem('jwtToken');
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : {};
     return this.apiService.get<UserResponse>('/user', { headers }).pipe(
-      tap((response) => {
+      tap((response: UserResponse) => {
         console.log('User data received:', response);
       })
     );
@@ -25,7 +25,7 @@ export class AuthService {
         localStorage.setItem('jwtToken', response.user.token);
         console.log(`Stored JWT token for user: ${credentials.email}`);
       }),
-      catchError((error) => {
+      catchError((error: any) => {
         console.error('Login error:', error);
         alert('Login failed. Please check your credentials and try again.');
         return throwError(error);

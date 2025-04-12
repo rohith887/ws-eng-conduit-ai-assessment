@@ -15,6 +15,20 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.userRepository.findAll();
+  generateJWT(user: User): string {
+    const today = new Date();
+    const exp = new Date(today);
+    exp.setDate(today.getDate() + 60);
+
+    const token = jwt.sign(
+      {
+        email: user.email,
+        exp: exp.getTime() / 1000,
+        id: user.id,
+        username: user.username,
+      },
+      SECRET,
+    );
     console.log(`Generated JWT for user: ${user.email}`);
     return token;
   }
@@ -29,7 +43,6 @@ export class UserService {
   }
 
   async create(dto: CreateUserDto): Promise<IUserRO> {
-    // check uniqueness of username/email
     const { username, email, password } = dto;
     const exists = await this.userRepository.count({ $or: [{ username }, { email }] });
 
@@ -43,7 +56,6 @@ export class UserService {
       );
     }
 
-    // create new user
     const user = new User(username, email, crypto.createHmac('sha256', password).digest('hex'));
     console.log(`Creating new user: ${email}`);
     const errors = await validate(user);
