@@ -8,18 +8,21 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   let port = configService.get<number>('PORT', 3001);
 
-  try {
-    await app.listen(port);
-    console.log(`App running at http://localhost:${port}`);
-  } catch (err) {
-    if (err.code === 'EADDRINUSE') {
-      port += 1;
+  const startServer = async (port: number) => {
+    try {
       await app.listen(port);
-      console.log(`Port was in use, switched to http://localhost:${port}`);
-    } else {
-      throw err;
+      console.log(`App running at http://localhost:${port}`);
+    } catch (error: any) {
+      if (error.code === 'EADDRINUSE') {
+        console.log(`Port ${port} is in use, trying next port...`);
+        await startServer(port + 1);
+      } else {
+        throw error;
+      }
     }
-  }
+  };
+
+  await startServer(port);
 
   const options = new DocumentBuilder()
     .setTitle('NestJS Realworld Example App')
