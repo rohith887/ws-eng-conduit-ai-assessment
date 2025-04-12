@@ -13,6 +13,17 @@ export class TagService {
 
   async findAll(): Promise<ITagsRO> {
     const tags = await this.tagRepository.findAll();
+
+    if (tags.length === 0) {
+      await this.tagRepository.persistAndFlush([
+        this.tagRepository.create({ tag: 'nestjs' }),
+        this.tagRepository.create({ tag: 'angular' }),
+        this.tagRepository.create({ tag: 'typescript' }),
+      ]);
+    }
+  
+    const updatedTags = await this.tagRepository.findAll();
     return { tags: tags.map((tag) => tag.tag) };
   }
+  
 }

@@ -32,11 +32,12 @@ export class ArticlesService {
   }
 
   query(config: ArticleListConfig): Observable<{ articles: Article[]; articlesCount: number }> {
-    return this.apiService.get(
-      '/articles' + (config.type === 'FEED' ? '/feed' : ''),
-      this.toHttpParams(config.filters),
-    );
+   // ✅ Correct
+return this.apiService.get<{ articles: Article[]; articlesCount: number }>('/articles', {
+      params: this.toHttpParams(config.filters)
+    });
   }
+  
 
   publishArticle(article: Article): Observable<ArticleResponse> {
     if (article.slug) {

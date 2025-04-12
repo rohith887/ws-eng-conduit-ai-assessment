@@ -5,7 +5,6 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { LoginUser, LoginUserRequest, NewUserRequest, NewUser } from '@realworld/core/api-types';
 import { HttpHeaders } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,12 +12,18 @@ export class AuthService {
 
   user(): Observable<UserResponse> {
     const token = localStorage.getItem('jwtToken');
-    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : {};
-    return this.apiService.get<UserResponse>('/user', { headers }).pipe(
+
+    const options = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      : undefined;
+    
+    return this.apiService.get<UserResponse>('/user', options).pipe(
+    
       tap((response: UserResponse) => {
         console.log('User data received:', response);
       })
     );
+    
   }
 
   login(credentials: LoginUser): Observable<UserResponse> {
