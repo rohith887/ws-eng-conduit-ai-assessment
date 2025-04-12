@@ -6,7 +6,7 @@
     "ng": "nx",
     "nx": "nx",
     "start": "run-p -l start:frontend start:backend",
-    "start:frontend": "nx run frontend:serve",
+    "start:frontend": "nx run frontend:serve --proxy-config=apps/frontend/proxy.conf.json",
     "start:backend": "nx run backend:serve",
     "build": "nx build",
     "submit": "ts-node submit.ts",
