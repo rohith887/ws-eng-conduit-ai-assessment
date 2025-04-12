@@ -28,7 +28,11 @@ async function bootstrap() {
     await app.listen(port);
     console.log(`App running at http://localhost:${port}`);
   } catch (error) {
-    console.error(`Failed to start server on port ${port}:`, error.message);
+    if (error instanceof Error) {
+      console.error(`Failed to start server on port ${port}:`, error.message);
+    } else {
+      console.error(`Failed to start server on port ${port}:`, error);
+    }
     process.exit(1);
   }
 
