@@ -17,7 +17,6 @@ async function bootstrap() {
     });
   };
 
-  const port = 3000;
   const isPortFree = await checkPort(port);
 
   if (!isPortFree) {
@@ -26,7 +25,6 @@ async function bootstrap() {
   }
 
   await app.listen(port);
-  console.log(`App running at http://localhost:${port}`);
   console.log(`App running at http://localhost:${port}`);
 
   const options = new DocumentBuilder()
