@@ -1,1 +1,18 @@
-<p>TODO</p>
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Articles Count</th>
+      <th>Favorites Received</th>
+      <th>First Article Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of roster">
+      <td><a [routerLink]="['/profile', user.username]">{{ user.username }}</a></td>
+      <td>{{ user.articlesCount }}</td>
+      <td>{{ user.favoritesReceived }}</td>
+      <td>{{ user.firstArticleDate ? (user.firstArticleDate | date: 'short') : 'N/A' }}</td>
+    </tr>
+  </tbody>
+</table>
