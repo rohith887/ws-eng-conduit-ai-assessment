@@ -15,7 +15,7 @@
   "cli": {
     "defaultCollection": "@nx/angular"
   },
-  "defaultProject": "frontend",
+  "defaultProject": "backend",
   "generators": {
     "@nx/angular:application": {
       "style": "css",
