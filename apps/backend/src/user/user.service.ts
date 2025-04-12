@@ -15,23 +15,6 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.userRepository.findAll();
-  generateJWT(user: User): string {
-    const today = new Date();
-    const exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
-    const token = jwt.sign(
-      {
-        email: user.email,
-        exp: exp.getTime() / 1000,
-        id: user.id,
-        username: user.username,
-      },
-      SECRET,
-    );
-    console.log(`Generated JWT for user: ${user.email}`);
-    return token;
-  }
 
   async findOne(loginUserDto: LoginUserDto): Promise<User> {
     const findOneOptions = {
