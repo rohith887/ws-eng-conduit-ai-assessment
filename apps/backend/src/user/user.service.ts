@@ -15,6 +15,7 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.userRepository.findAll();
+  }
 
   async findOne(loginUserDto: LoginUserDto): Promise<User> {
     const findOneOptions = {
