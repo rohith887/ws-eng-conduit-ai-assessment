@@ -15,6 +15,8 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.userRepository.findAll();
+    console.log(`Generated JWT for user: ${user.email}`);
+    return token;
   }
 
   async findOne(loginUserDto: LoginUserDto): Promise<User> {
@@ -93,7 +95,7 @@ export class UserService {
     const exp = new Date(today);
     exp.setDate(today.getDate() + 60);
 
-    return jwt.sign(
+    const token = jwt.sign(
       {
         email: user.email,
         exp: exp.getTime() / 1000,
