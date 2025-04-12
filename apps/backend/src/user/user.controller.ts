@@ -26,8 +26,10 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @Post('users')
   async create(@Body('user') userData: CreateUserDto) {
-    console.log(`✅ New user registered: ${userData.email}`);
-    return this.userService.create(userData);
+    console.log(`✅ New user registration attempt: ${userData.email}`);
+    const result = await this.userService.create(userData);
+    console.log(`✅ User registered successfully: ${userData.email}`);
+    return result;
   }
 
   @Delete('users/:slug')
@@ -43,9 +45,11 @@ export class UserController {
 
     const errors = { User: ' not found' };
     if (!foundUser) {
+      console.log(`❌ Login failed for: ${loginUserDto.email}`);
       throw new HttpException({ errors }, 401);
     }
     const token = this.userService.generateJWT(foundUser);
+    console.log(`🔐 Login successful for: ${loginUserDto.email}`);
     const { email, username, bio, image } = foundUser;
     const user = { email, token, username, bio, image };
     return { user };
