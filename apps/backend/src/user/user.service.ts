@@ -104,6 +104,16 @@ export class UserService {
       },
       SECRET,
     );
+    console.log(`Generated JWT for user: ${user.email}`);
+    return token;
+      {
+        email: user.email,
+        exp: exp.getTime() / 1000,
+        id: user.id,
+        username: user.username,
+      },
+      SECRET,
+    );
   }
 
   private buildUserRO(user: User) {
