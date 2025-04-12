@@ -49,15 +49,17 @@ export class UserService {
     const errors = await validate(user);
 
     if (errors.length > 0) {
+      console.error('Validation errors:', errors);
       throw new HttpException(
         {
           message: 'Input data validation failed',
-          errors: { username: 'Userinput is not valid.' },
+          errors: { username: 'User input is not valid.' },
         },
         HttpStatus.BAD_REQUEST,
       );
     } else {
       await this.em.persistAndFlush(user);
+      console.log(`User created successfully: ${email}`);
       return this.buildUserRO(user);
     }
   }

@@ -19,6 +19,11 @@ export class AuthService {
       tap((response) => {
         localStorage.setItem('jwtToken', response.user.token);
         console.log(`Stored JWT token for user: ${credentials.email}`);
+      }),
+      catchError((error) => {
+        console.error('Login error:', error);
+        alert('Login failed. Please check your credentials and try again.');
+        return throwError(error);
       })
     );
   }
@@ -28,6 +33,11 @@ export class AuthService {
       tap((response) => {
         localStorage.setItem('jwtToken', response.user.token);
         console.log(`Stored JWT token for new user: ${credentials.email}`);
+      }),
+      catchError((error) => {
+        console.error('Registration error:', error);
+        alert('Registration failed. Please check your input and try again.');
+        return throwError(error);
       })
     );
   }
