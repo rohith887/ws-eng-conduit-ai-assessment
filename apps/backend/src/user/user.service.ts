@@ -104,40 +104,20 @@ export class UserService {
     return this.buildUserRO(user);
   }
 
-  generateJWT(user: User) {
+  generateJWT(user: User): string {
     const today = new Date();
     const exp = new Date(today);
     exp.setDate(today.getDate() + 60);
 
-    const token = jwt.sign(
-      {
-        email: user.email,
-        exp: exp.getTime() / 1000,
-        id: user.id,
-        username: user.username,
-      },
-      SECRET,
-    );
+    const token = jwt.sign({
+      email: user.email,
+      id: user.id,
+      username: user.username,
+      exp: Math.floor(exp.getTime() / 1000)
+    }, SECRET);
+
     console.log(`Generated JWT for user: ${user.email}`);
     return token;
-      {
-        email: user.email,
-        exp: exp.getTime() / 1000,
-        id: user.id,
-        username: user.username,
-      },
-      SECRET,
-    );
-    console.log(`Generated JWT for user: ${user.email}`);
-    return token;
-      {
-        email: user.email,
-        exp: exp.getTime() / 1000,
-        id: user.id,
-        username: user.username,
-      },
-      SECRET,
-    );
   }
 
   private buildUserRO(user: User) {
